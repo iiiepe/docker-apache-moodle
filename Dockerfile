@@ -34,9 +34,10 @@ RUN php5enmod mcrypt
 RUN php5enmod opcache
 
 # PHP
-ADD ./config/php/php.ini /etc/php5/fpm/php.ini
+ADD ./config/php/php.ini /etc/php5/apache2/php.ini
 
-RUN echo "extension=uploadprogress.so" > /etc/php5/conf.d/uploadprogress.ini
+RUN echo "extension=uploadprogress.so" > /etc/php5/mods-available/uploadprogress.ini
+RUN php5enmod uploadprogress
 
 # Manually set up the apache environment variables
 ENV APACHE_RUN_USER www-data
@@ -49,6 +50,8 @@ RUN usermod -u 1000 www-data
 RUN usermod -a -G users www-data
 RUN chown -R www-data:www-data /var/www
 
+RUN rm -Rf /var/www/html
+
 EXPOSE 80
 WORKDIR /var/www
 VOLUME ["/var/www/sites/default/files"]
@@ -56,4 +59,4 @@ CMD ["/usr/bin/supervisord", "-n"]
 
 # Add files
 ADD ./config/supervisord-apache.conf /etc/supervisor/conf.d/supervisord-apache.conf
-ADD ./config/apache-config.conf /etc/apache2/sites-enabled/000-default
+ADD ./config/apache-config.conf /etc/apache2/sites-enabled/000-default.conf

@@ -1,12 +1,10 @@
-# Docker image with Apache and PHP 5.3.10 running on Ubuntu 12.04
-Docker image with Apache optimized to run Drupal 6 websites. Uses PHP 5.3 because Drupal 6 has some issues with newer versions of PHP.
+# Docker image with Apache and PHP running on Ubuntu 14.04
+Docker image with Apache optimized to run Moodle websites
 
 Inclues:
 
 - Composer
-- Drush
 - PHP uploadprogress
-- APC
 
 ### Build
 
@@ -14,17 +12,17 @@ Inclues:
 
 		or
 
-		$ docker build --tag=yourname/apache-drupal6 .
+		$ docker build --tag=yourname/apache-moodle .
 
 ### Use
 The website will be loaded from /var/www so make sure you add your files there.
 
-		$ docker run -d -v application:/var/www -p 80:80 iiiepe/apache-drupal6
+		$ docker run -d -v application:/var/www -p 80:80 iiiepe/apache-moodle
 
 #### With fig
 
 		web:
-		  image: iiiepe/apache-drupal6
+		  image: iiiepe/apache-moodle
 		  volumes:
 		    - application:/var/www
 		    - logs:/var/log/supervisor
