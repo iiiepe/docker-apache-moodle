@@ -17,6 +17,8 @@ RUN apt-get update && apt-get dist-upgrade -y
 # Install apache, PHP, and supplimentary programs. curl and lynx-cur are for debugging the container.
 RUN apt-get -y install apache2 libapache2-mod-php5 php5-xmlrpc php5-Intl php5-mcrypt php5-cli php5-common php5-json php5-imagick php5-imap php5-memcache php5-mysql php5-gd php-pear php5-redis php5-memcache  php5-dev php5-curl curl git supervisor make
 
+RUN apt-get -y install sendmail
+
 # Clean up
 RUN apt-get clean && rm -rf /var/lib/apt/lists/* /tmp/* /var/tmp/*
 
@@ -45,6 +47,11 @@ ENV APACHE_RUN_GROUP www-data
 ENV APACHE_LOG_DIR /var/log/supervisor
 ENV APACHE_LOCK_DIR /var/lock/apache2
 ENV APACHE_PID_FILE /var/run/apache2.pid
+
+# Startup script
+# This startup script wll configure nginx
+ADD ./startup.sh /opt/startup.sh
+RUN chmod +x /opt/startup.sh
 
 RUN usermod -u 1000 www-data
 RUN usermod -a -G users www-data
