@@ -91,4 +91,5 @@ CMD ["/usr/bin/supervisord", "-n"]
 
 # Add files
 ADD ./config/supervisord-apache.conf /etc/supervisor/conf.d/supervisord-apache.conf
-ADD ./config/apache-config.conf /etc/apache2/sites-enabled/000-default.conf
+ADD ./config/apache2.conf /etc/apache2/apache2.conf
+ADD ./config/default.conf /etc/apache2/sites-enabled/000-default.conf
